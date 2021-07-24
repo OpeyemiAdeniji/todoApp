@@ -24,8 +24,10 @@ storage.getConfig = () => {
         }
     }
 
-    return config;
-}
+    
+
+    return config;  
+}   
 
 storage.getConfigWithBearer = () => {
 
@@ -36,7 +38,20 @@ storage.getConfigWithBearer = () => {
         }
     }
 
+    console.log(config);
+
     return config;
+}
+    
+storage.saveCredentials = (token, id) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('userId', id);
+}
+
+storage.clearAuth = () => {
+    if(storage.checkToken() && storage.checkUserID()){
+        localStorage.clear();
+    }
 }
 
 export default storage;
