@@ -273,3 +273,56 @@ body {
 .todo-items {
   margin-top: 0.8rem;
 }
+
+.custom-modal .modal-content{
+    border: none !important;
+    margin: 0 auto;
+}
+
+.custom-modal.rem-modal .modal-content{
+    width: 50%;
+}
+
+.custom-modal .modal-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.custom-modal .modal-box .modal-sidebar,
+.custom-modal .modal-box .modal-content-box{
+    height: 100%;
+    position: relative;
+}
+
+.custom-modal .modal-box .modal-sidebar{
+    width: 40%;
+}
+
+.custom-modal .modal-box .modal-content-box{
+    width: 60%;
+}
+
+.custom-modal.rem-modal .modal-box .modal-sidebar{
+  display: none;
+}
+
+.custom-modal.rem-modal .modal-box .modal-content-box{
+  width: 100%;
+}
+
+.custom-modal .modal-header-box{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-bottom: 0.65rem;
+}
+
+.custom-modal .modal-content-area{
+    margin-top: 1.2rem;
+}
+
+.custom-control .custom-control-label span{
+  position: relative;
+  top: 2px;
+}

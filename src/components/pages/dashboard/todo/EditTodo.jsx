@@ -1,83 +1,84 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import React, { useState, useEffect, useContext} from 'react';
+import { Link, useHistory } from 'react-router-dom';
+
+import TopBar from '../../../layouts/partials/TopBar';
+import RemModal from './RemModal';
 
 
-import TopBar from '../../../layouts/partials/TopBar'
-import RemModal from "./RemModal";
-
-const AddTodo = () => {
+const EditTodo = (props) => {
 
     const [showAdd, setShowAdd] = useState(false);
-    const [showRem, setshowRem] = useState(false);
+    const [showRem, setShowRem] = useState(false);
     const [duplicate, setDuplicate] = useState([]);
     const [count, setCount] = useState(0);
 
     useEffect(() => {
-        
+
     }, [])
 
     const history = useHistory();
 
     const goBack = (e) => {
-
-        if (e) e.preventDefault();
+        if(e) e.preventDefault();
         history.goBack();
-
     }
 
     const barLinks = () => {
+
         return(
             <>
                 <div className="ui-group-button">
-                    <Link
-                    onClick={e => goBack()} 
-                    className="btn btn-sm btn-primary onwhite fs-15">
-                        Back
-                    </Link>
+
+                    <Link onClick={(e) => goBack(e)} className="btn btn-sm btn-primary onwhite fs-15">Back</Link>
+
                 </div>
             </>
         )
+
     }
 
     const toggleAdd = (e) => {
-        if (e) e.preventDefault();
-        
+        if(e) e.preventDefault();
         setShowAdd(true);
         setDuplicate(duplicate.concat([count + 1]));
         setCount(count + 1);
     }
-    
+
     const toggleRem = (e, index) => {
-        if (e) e.preventDefault();
-        
+        if(e) e.preventDefault();
+
         const currItems = duplicate;
         currItems.splice(index, 1);
         setDuplicate(currItems);
         setCount(count - 1);
 
-        if (currItems.length === 0) {
+        if(currItems.length === 0){
+
             setShowAdd(false);
             setCount(0);
             setDuplicate([]);
+
         }
+        
     }
 
     const showRemModal = (e) => {
-        if(e) e.preventDefault();
-        setshowRem(!showRem);
-    }
-    
-    const duplicateItem = (e) => {
-        if (e) e.preventDefault();
 
+        if(e) e.preventDefault();
+        setShowRem(!showRem);
+
+    }
+
+    const duplicateItem = (e) => {
+        if(e) e.preventDefault();
         setDuplicate(duplicate.concat([count + 1]));
         setCount(count + 1);
     }
 
-    return (
+    return(
         <>
 
-            <TopBar pageTitle='Add Todos' linkComps={barLinks} />
+            <TopBar pageTitle="Edit Todo List" linkComps={barLinks} />
 
             <section>
 
@@ -91,15 +92,11 @@ const AddTodo = () => {
 
                                 <div className="ui-form-box">
 
-                                    <form onSubmit={e => e.preventDefault()}>
+                                    <form onSubmit={(e) => e.preventDefault()}>
 
                                         <div className="form-group">
-                                            <label htmlFor="title" className="fs-14">List Title</label>
-                                            <input 
-                                            type="text" 
-                                            className="form-control fs-15"
-                                            placeholder="Enter a title"
-                                            />
+                                            <label htmlFor="title" className="fs-14">List title</label>
+                                            <input type="text" className="form-control fs-15" placeholder="Enter a title" />
                                         </div>
 
                                         <div className="row">
@@ -107,24 +104,16 @@ const AddTodo = () => {
                                             <div className="col-md-6">
 
                                                 <div className="form-group">
-                                                    <label htmlFor="title" className="fs-14">Due Date</label>
-                                                    <input 
-                                                    type="date" 
-                                                    className="form-control fs-15"
-                                                    />
+                                                    <label htmlFor="title" className="fs-14">Due date</label>
+                                                    <input type="date" className="form-control fs-15" />
                                                 </div>
 
                                             </div>
-
                                             <div className="col-md-6">
 
                                                 <div className="form-group">
-                                                    <label htmlFor="title" className="fs-14">Due Time</label>
-                                                    <input 
-                                                    type="time" 
-                                                    className="form-control fs-15"
-                                                    placeholder="Enter a title"
-                                                    />
+                                                    <label htmlFor="title" className="fs-14">Due time</label>
+                                                    <input type="time" className="form-control fs-15" />
                                                 </div>
 
                                             </div>
@@ -133,13 +122,15 @@ const AddTodo = () => {
 
                                         <div className="ui-line bg-silverlight"></div>
 
+                                        <div className="d-flex align-items-center">
 
-                                        <div className="d-flex align-item-center">
-                                            <h3 className="fs-14">Todo Items ({count})</h3>
+                                            <h3 className="fs-14">Todo Items ({ count })</h3>
+
                                             {
                                                 !showAdd &&
-                                                <Link onClick={e => {toggleAdd(e)}} className="ml-auto onblue fs-15">Add Item</Link>
+                                                <Link onClick={(e) => toggleAdd(e)} className="ml-auto onblue fs-15">Add Item</Link>
                                             }
+
                                         </div>
 
                                         {
@@ -149,37 +140,25 @@ const AddTodo = () => {
 
                                                     {
                                                         duplicate.map((item, i) => 
-
                                                             <>
-
                                                                 <div className="td-item">
 
-                                                                    <div className="row">
+                                                                   <div className="row">
 
                                                                         <div className="col-md-6">
-
                                                                             <div className="form-group">
-                                                                            <label htmlFor="title" className="fs-14">Item title</label>
-                                                                                <input 
-                                                                                type="text" 
-                                                                                className="form-control fs-15"
-                                                                                placeholder="Enter a title"
-                                                                                />
+                                                                                <label htmlFor="title" className="fs-14">Item title</label>
+                                                                                <input type="text" className="form-control fs-15" placeholder="Enter a title" />
                                                                             </div>
-
                                                                         </div>
-                                                                        
+
                                                                         <div className="col-md-6">
 
                                                                             <div className="form-group">
                                                                                 <label htmlFor="title" className="fs-14">Item description</label>
-                                                                                <input 
-                                                                                type="text" 
-                                                                                className="form-control fs-15"
-                                                                                placeholder="Enter a description"
-                                                                                />
+                                                                                <input type="text" className="form-control fs-15" placeholder="Enter a description" />
                                                                             </div>
-
+                                                                            
                                                                         </div>
 
                                                                     </div>
@@ -190,47 +169,39 @@ const AddTodo = () => {
 
                                                                             <div className="form-group">
                                                                                 <label htmlFor="title" className="fs-14">Item due date</label>
-                                                                                <input 
-                                                                                type="date" 
-                                                                                className="form-control fs-15"
-                                                                                />
+                                                                                <input type="date" className="form-control fs-15" />
                                                                             </div>
 
                                                                         </div>
-
                                                                         <div className="col-md-6">
 
                                                                             <div className="form-group">
                                                                                 <label htmlFor="title" className="fs-14">Item due time</label>
-                                                                                <input 
-                                                                                type="time" 
-                                                                                className="form-control fs-15"
-                                                                                placeholder="Enter a title"
-                                                                                />
+                                                                                <input type="time" className="form-control fs-15" />
                                                                             </div>
 
                                                                         </div>
 
                                                                     </div>
 
-                                                                    <div className="d-flex align-item-center">
-                                                                        <Link onClick={e => toggleRem(e,i)} className="onaliz fs-13">Remove</Link>&nbsp;&nbsp;
-                                                                        <Link onClick={e => showRemModal(e)} className="onapple fs-13">Add Reminder</Link>
+                                                                    <div className="d-flex align-items-center">
+
+                                                                        <Link onClick={(e) => toggleRem(e, i)} className="onaliz fs-13">Remove</Link> &nbsp; &nbsp;
+                                                                        <Link onClick={(e) => showRemModal(e)} className="onapple fs-13">Add Reminder</Link>
+
                                                                     </div>
 
                                                                 </div>
-                                                            
+
                                                             </>
                                                         )
                                                     }
 
-
-                                                    <div className="d-flex align-item-center">
+                                                 
+                                                    <div className="d-flex align-items-center mrgt">
 
                                                         <div className="ml-auto">
-                                                            
-                                                            <Link onClick={e => duplicateItem(e)} className="onblue fs-15">Add Item</Link>
-                                                            
+                                                            <Link onClick={(e) => duplicateItem(e)} className=" onblue fs-15">Add Item</Link> &nbsp;
                                                         </div>
 
                                                     </div>
@@ -240,7 +211,9 @@ const AddTodo = () => {
                                         }
 
                                         <div className="form-group mrgt3">
-                                            <Link className="btn btn-primary btn-lg onwhite mrgb3">Save Details</Link>
+
+                                            <Link className="btn btn-lg bg-apple onwhite"> Save Details </Link>
+
                                         </div>
 
                                     </form>
@@ -250,17 +223,18 @@ const AddTodo = () => {
                             </div>
 
                         </div>
-
+                        
                     </div>
 
                 </div>
 
             </section>
 
-            <RemModal isShow={showRem} closeModal={showRemModal} modalTitle="Add Reminder" />
+            
             
         </>
     )
+
 }
 
-export default AddTodo
+export default EditTodo;

@@ -15,6 +15,8 @@ const Weather = React.lazy(() => import('./components/pages/Weather'));
 const DashboardHome = React.lazy(() => import ('./components/pages/dashboard/Home'))
 const TodoList = React.lazy(() => import ('./components/pages/dashboard/todo/Todo'))
 const AddTodo = React.lazy(() => import ('./components/pages/dashboard/todo/AddTodo'))
+const EditTodo = React.lazy(() => import ('./components/pages/dashboard/todo/EditTodo'))
+const TodoDetails = React.lazy(() => import ('./components/pages/dashboard/todo/TodoDetails'))
 // const DropSelect = React.lazy(() => import('./components/layouts/partials/DropSelect'));
 
 const App = () => {
@@ -39,6 +41,8 @@ const App = () => {
                   <Route exact path="/dashboard" component={DashboardLayout(DashboardHome)} />
                   <Route exact path="/dashboard/todo-list" component={DashboardLayout(TodoList)} />
                   <Route exact path="/dashboard/todo-list/add-todo" component={DashboardLayout(AddTodo)} />
+                  <Route exact path="/dashboard/todo-list/edit/:id" component={DashboardLayout(EditTodo)} />
+                  <Route exact path="/dashboard/todo-list/todo-details" component={DashboardLayout(TodoDetails)} />
                   <Route exact path="/weather" component={Weather} />
 
                   {/* <Route exact path="/select" component={DropSelect} /> */}
