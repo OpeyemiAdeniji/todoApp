@@ -326,3 +326,12 @@ body {
   position: relative;
   top: 2px;
 }
+
+.custom-table td{
+  padding: 1rem 0.75rem;
+}
+
+.custom-table thead th{
+    border-top: none !important;
+    border-bottom: none !important;
+}

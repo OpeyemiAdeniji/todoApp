@@ -39,7 +39,7 @@ const DescModal =  ({ isShow, closeModal, modalTitle }) => {
 
                             <div className="modal-content-area">
 
-                                <p className="fs-14">Meet Uriel for BTF meeting @3PM on Thursday to get the Supersonic project done on time. This is very important because we need to make sure we gt this done.</p>
+                                <p className="fs-14">Meet Uriel for BTF meeting @3PM on Thursday to get the Supersonic project done on time. This is very important because we need to make sure we get this done.</p>
 
                                 <div className="form-group mrgt2">
 
