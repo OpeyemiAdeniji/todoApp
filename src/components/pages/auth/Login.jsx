@@ -138,7 +138,7 @@ const Login = (props) => {
                             // setMsgData({...msgData, type: 'success', title: 'Login Succesful!', message: 'You have successfully logged in', buttonText: 'Ok'})
                             // setStep(2);
 
-                            props.history.push('/dashbaord');
+                            props.history.push('/dashboard');
                     }
                 }).catch((err) => {
                     setAdata({...aData, show: true, type: 'danger', message: err.response.data.message});

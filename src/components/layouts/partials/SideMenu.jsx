@@ -45,9 +45,30 @@ const SideMenu = () => {
                     <div className="sidebar-sticky pt-3">
                         <ul className="nav flex-column">
                                 <li className="nav-item">
-                                    <Link className="nav-link" href="#">
+                                    <Link className="nav-link" to="/dashboard">
                                         <span className="fe fe-home pdr" />
                                         Dashboard 
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link className="nav-link" to="/dashboard/todo-list" >
+                                        <span className="fe fe-list pdr" />
+                                        Todo Lists 
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="#">
+                                        <span className="fe fe-calendar pdr" />
+                                        Meetings 
+                                    </Link>
+                                </li>
+
+                                <li className="nav-item">
+                                    <Link className="nav-link" href="#">
+                                        <span className="fe fe-settings pdr" />
+                                        Settings 
                                     </Link>
                                 </li>
 

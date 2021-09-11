@@ -5,12 +5,16 @@ import MainLoader from './components/helpers/MainLoader';
 import DashboardLayout from './components/layouts/DashboardLayout';
 import CountryState from './context/countries/countryState'
 import UserState from './context/user/userState';
+import TodoState from './context/todo/todoState';
 
 const Home = React.lazy(() => import('./components/pages/Home'));  // lazy delay pages for few seconds because of API calls
 const NotFound = React.lazy(() => import('./components/pages/404'));
 const Login = React.lazy(() => import('./components/pages/auth/Login'));
 const Register = React.lazy(() => import('./components/pages/auth/Register'));
+const Weather = React.lazy(() => import('./components/pages/Weather'));
 const DashboardHome = React.lazy(() => import ('./components/pages/dashboard/Home'))
+const TodoList = React.lazy(() => import ('./components/pages/dashboard/todo/Todo'))
+const AddTodo = React.lazy(() => import ('./components/pages/dashboard/todo/AddTodo'))
 // const DropSelect = React.lazy(() => import('./components/layouts/partials/DropSelect'));
 
 const App = () => {
@@ -23,7 +27,9 @@ const App = () => {
 
         <CountryState>
 
-          <Suspense fallback={MainLoader()}>
+          <TodoState>
+
+           <Suspense fallback={MainLoader()}>
 
               <Switch>
 
@@ -31,6 +37,9 @@ const App = () => {
                   <Route exact path="/login" component={Login} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/dashboard" component={DashboardLayout(DashboardHome)} />
+                  <Route exact path="/dashboard/todo-list" component={DashboardLayout(TodoList)} />
+                  <Route exact path="/dashboard/todo-list/add-todo" component={DashboardLayout(AddTodo)} />
+                  <Route exact path="/weather" component={Weather} />
 
                   {/* <Route exact path="/select" component={DropSelect} /> */}
 
@@ -40,6 +49,7 @@ const App = () => {
 
           </Suspense>
 
+          </TodoState>
         </CountryState>
         
       </UserState>

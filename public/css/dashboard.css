@@ -157,6 +157,7 @@ body {
   position: relative;
   display: block;
   padding: 0.5rem 1rem;
+  border-radius: 0.45rem;
 }
 
 .ui-card-footer{
@@ -246,4 +247,29 @@ body {
 
 .ui-dashboard-card:hover .frnd-list::-webkit-scrollbar{
   display: block;
+}
+
+.empty-state{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  min-height: 300px;
+}
+
+.ui-form-box {
+  padding: 1rem 1.3rem;
+  border: 1px solid rgba(0, 0, 0, .1);
+  border-radius: 6px;
+}
+
+.todo-items .td-item {
+  padding: 0.6rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.todo-items {
+  margin-top: 0.8rem;
 }

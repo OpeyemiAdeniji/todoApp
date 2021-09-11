@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import Axios from 'axios';
 import UserContext from './userContext';
 import UserReducer from './userReducer';
+import { useHistory } from "react-router";
+import Body from "../../components/helpers/body";
 import storage from '../../components/helpers/storage';
 
 import {
@@ -15,6 +17,16 @@ import {
         user: {},
         loading: false
     }
+
+    
+    const history = useHistory();
+
+    const logout = () => {
+        localStorage.clear();
+        Body.dismissBackground('dash-body');
+        history.push('/login');
+    }
+
 
     const [state, dispatch] = useReducer(UserReducer, initialState);
 
