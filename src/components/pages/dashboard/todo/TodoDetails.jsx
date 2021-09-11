@@ -132,8 +132,8 @@ const Details = (props) => {
 
                             <div className="ui-group-button">
 
-                                <Link className="btn btn-sm onwhite btn-info">Edit Todo</Link>
-                                <Link className="btn btn-sm onwhite btn-danger">Delete</Link>
+                                <Link to='/dashboard/todo-list/edit/09876567899876567' className="btn btn-sm onwhite btn-info">Edit Todo</Link>
+                                <Link onClick={(e) => toggleDecision(e, 'delete', null)} className="btn btn-sm onwhite btn-danger">Delete</Link>
                                 
                             </div>
 
@@ -188,7 +188,7 @@ const Details = (props) => {
                                         <td>
                                             <div className="ui-group-button">
 
-                                                <Link to='/dashboard/todo-list/edit/076543467898765678' className="onblue"><span className="fe fe-edit fs-16"></span></Link>
+                                                <Link to='/dashboard/todo-list/edit-item/076543467898765678' className="onblue"><span className="fe fe-edit fs-16"></span></Link>
                                                 <Link onClick={(e) => toggleDecision(e, 'delete', null)} className="onaliz"><span className="fe fe-trash fs-16"></span></Link>
                                                 <Link onClick={(e) => toggleDecision(e, 'mark', null)} className="onapple"><span className="fe fe-check-square fs-16"></span></Link>
 

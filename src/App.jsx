@@ -16,6 +16,7 @@ const DashboardHome = React.lazy(() => import ('./components/pages/dashboard/Hom
 const TodoList = React.lazy(() => import ('./components/pages/dashboard/todo/Todo'))
 const AddTodo = React.lazy(() => import ('./components/pages/dashboard/todo/AddTodo'))
 const EditTodo = React.lazy(() => import ('./components/pages/dashboard/todo/EditTodo'))
+const EditItem = React.lazy(() => import ('./components/pages/dashboard/todo/EditItem'))
 const TodoDetails = React.lazy(() => import ('./components/pages/dashboard/todo/TodoDetails'))
 // const DropSelect = React.lazy(() => import('./components/layouts/partials/DropSelect'));
 
@@ -42,6 +43,7 @@ const App = () => {
                   <Route exact path="/dashboard/todo-list" component={DashboardLayout(TodoList)} />
                   <Route exact path="/dashboard/todo-list/add-todo" component={DashboardLayout(AddTodo)} />
                   <Route exact path="/dashboard/todo-list/edit/:id" component={DashboardLayout(EditTodo)} />
+                  <Route exact path="/dashboard/todo-list/edit-item/:id" component={DashboardLayout(EditItem)} />
                   <Route exact path="/dashboard/todo-list/todo-details" component={DashboardLayout(TodoDetails)} />
                   <Route exact path="/weather" component={Weather} />
 
