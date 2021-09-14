@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import TopBar from '../../../layouts/partials/TopBar';
 import RemModal from './RemModal';
 
-
 const EditTodo = (props) => {
 
     const [showAdd, setShowAdd] = useState(false);
@@ -77,7 +76,6 @@ const EditTodo = (props) => {
 
     return(
         <>
-
             <TopBar pageTitle="Edit Todo List" linkComps={barLinks} />
 
             <section>

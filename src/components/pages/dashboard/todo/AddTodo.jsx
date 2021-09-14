@@ -7,11 +7,17 @@ import RemModal from "./RemModal";
 import Alert from "../../../layouts/partials/Alert";
 import Axios from "axios";
 import storage from "../../../helpers/storage";
+import MessageModal from "./MessageModal";
 
 const AddTodo = () => {
 
     const [showAdd, setShowAdd] = useState(false);
     const [showRem, setshowRem] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+    const [errorMsg, setErrorMsg] = useState({
+        type: '',
+        message: ''
+    })
     const [duplicate, setDuplicate] = useState([]);
     const [count, setCount] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -62,6 +68,11 @@ const AddTodo = () => {
                 </div>
             </>
         )
+    }
+
+    const toggleMessage = (e) => {
+        if(e) e.preventDefault();
+        setShowMessage(!showMessage);
     }
 
     const toggleAdd = (e) => {
@@ -131,18 +142,28 @@ const AddTodo = () => {
             }else{
 
                 // save the items
-                await pushItems();
+               const items = await pushItems();
 
-                const check = await checkItems();
+                if(items.length > 0 && items.length === duplicate.length){
 
-                if(check === true){
                     setLoading(true);
 
-                    await Axios.post(`${process.env.REACT_APP_TODO_URL}/todos`, { ...todoData }, storage.getConfigWithBearer())
+                    await Axios.post(`${process.env.REACT_APP_TODO_URL}/todos?user_id=${storage.getUserID()}`, { ...todoData }, storage.getConfigWithBearer())
                     .then(async (resp) => {
+
                         if(resp.data.status === 200 && resp.data.error === false){
-                            await createItems(resp.data.data._id);
+
+                            const create = await createItems(items, resp.data.data._id);
+
+                            if(create === false){
+                                setErrorMsg({ ...errorMsg, message: 'An error occured. Please try again', type: 'error' });
+                                toggleMessage();
+                            }else{
+                                setErrorMsg({ ...errorMsg, type: 'success' });
+                                toggleMessage();
+                            }
                         }
+
                     })
                 }
 
@@ -152,6 +173,8 @@ const AddTodo = () => {
 
     const pushItems = () => {
 
+        let dataQ = [];
+
         for(let i = 0; i < duplicate.length; i++){
 
             const tItem = document.getElementById(`item-title-${i}`).value;
@@ -159,61 +182,93 @@ const AddTodo = () => {
             const tDate = document.getElementById(`item-date-${i}`).value;
             const tTime = document.getElementById(`item-time-${i}`).value;
 
-            const data = [
-                {
+            const data =  {
                     title: tItem,
                     description: tDesc,
                     dueDate: tDate,
-                    dueTime: tTime
+                    dueTime: tTime + ':00'
                 }
-            ]
 
-            setItems(itemsArray.concat(data));
-            console.log(data)
+            const check = checkItems(data, i);
 
-        }
-    }
+            if(check){
 
-    const checkItems = () => {
-        for(let j = 0; j < itemsArray.length; j++){
-
-            if(!itemsArray[j].title && !itemsArray[j].description && !itemsArray[j].dueDate && !itemsArray[j].dueTime){
-                const alertBox = document.getElementById(`item-alert-${j}`);
-                alertBox.innerHTML = 'All Item fields are required';
-                return false;
-
-            }else if(!itemsArray[j].title){
-                const alertBox = document.getElementById(`item-alert-${j}`);
-                alertBox.innerHTML = 'Enter item title';
-                return false;
-
-            }else if(!itemsArray[j].description){
-                const alertBox = document.getElementById(`item-alert-${j}`);
-                alertBox.innerHTML = 'Enter item description';
-                return false;
-
-            }else if(!itemsArray[j].dueDate){
-                const alertBox = document.getElementById(`item-alert-${j}`);
-                alertBox.innerHTML = 'Enter item due date';
-                return false;
-
-            }else if(!itemsArray[j].dueTime){
-                const alertBox = document.getElementById(`item-alert-${j}`);
-                alertBox.innerHTML = 'Enter item due time';
-                return false;
+                dataQ.push(data);
 
             }else{
-                return true;
+
+                dataQ = [];
             }
+
         }
+
+        return dataQ
     }
 
-    const createItems = async (todoId) => {
+    const checkItems = (data, index) => {
+        let flag = false;
 
-        for(let j = 0; j < itemsArray.length; j++){
+        if(!data.title && !data.description && !data.dueDate && !data.dueTime){
+            const alertBox = document.getElementById(`item-alert-${index}`);
+            alertBox.innerHTML = 'All Item fields are required';
+            flag = false;
 
-    
+        }else if(!data.title){
+            const alertBox = document.getElementById(`item-alert-${index}`);
+            alertBox.innerHTML = 'Enter item title';
+            flag = false;
+
+        }else if(!data.description){
+            const alertBox = document.getElementById(`item-alert-${index}`);
+            alertBox.innerHTML = 'Enter item description';
+            flag = false;
+
+        }else if(!data.dueDate){
+            const alertBox = document.getElementById(`item-alert-${index}`);
+            alertBox.innerHTML = 'Enter item due date';
+            flag = false;
+
+        }else if(!data.dueTime){
+            const alertBox = document.getElementById(`item-alert-${index}`);
+            alertBox.innerHTML = 'Enter item due time';
+            flag = false;
+
+        }else{
+            flag = true;
         }
+
+        return flag;
+    }
+    
+    const createItems = async (data, todoId) => {
+
+        let flag = false;
+
+        for(let j = 0; j < data.length; j++){
+
+            const item = {
+                title: data[j].title,
+                description: data[j].description,
+                dueDate: data[j].dueDate,
+                dueTime: data[j].dueTime,
+                todo: todoId
+            }
+
+            const result = await Axios.post(`${process.env.REACT_APP_TODO_URL}/items?user_id=${storage.getUserID()}`, {...item}, storage.getConfigWithBearer())
+
+            if(result.data.status === 200 && result.data.error === false){
+
+                flag = true;
+                continue;
+
+            }else{
+
+                flag = false;
+
+            }
+        }
+
+        return flag;
     }
 
     return (
@@ -269,8 +324,8 @@ const AddTodo = () => {
                                                 <div className="form-group">
                                                     <label htmlFor="title" className="fs-14">Due Time</label>
                                                     <input 
-                                                    defaultValue={(e) => setTodoData({ ...todoData, dueTime: e.target.value})}
-                                                    onChange={(e) => setTodoData({ ...todoData, dueTime: e.target.value})}
+                                                    defaultValue={(e) => setTodoData({ ...todoData, dueTime: e.target.value + ':00'})}
+                                                    onChange={(e) => setTodoData({ ...todoData, dueTime: e.target.value + ':00'})}
                                                     type="time" 
                                                     className="form-control fs-15"
                                                     placeholder="Enter a title"
@@ -414,7 +469,8 @@ const AddTodo = () => {
             </section>
 
             <RemModal isShow={showRem} closeModal={showRemModal} modalTitle="Add Reminder" />
-            
+
+            <MessageModal isShow={showMessage} closeModal={toggleMessage} errorMessage={errorMsg.message} type={errorMsg.type} />
         </>
     )
 }

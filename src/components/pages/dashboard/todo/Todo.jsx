@@ -115,6 +115,7 @@ import TodoContext from '../../../../context/todo/todoContext'
 import storage from '../../../helpers/storage'
 
 import TopBar from '../../../layouts/partials/TopBar'
+import * as moment from "moment";
 
 const Todo = (props) => {
     const userContext = useContext(UserContext);
@@ -147,7 +148,7 @@ const Todo = (props) => {
     const cofigEmpty = () => {
         setTimeout(() => {
             setEmpty(true)
-        }, 3050);
+        }, 7000);
     }
 
     return (
@@ -226,7 +227,7 @@ const Todo = (props) => {
                             !todoContext.loading && todoContext.todos.length > 0 &&
                             <>
 
-                                <table className="table table-stripe">
+                                <table className="table custom-table">
 
                                     <thead>
                                         <tr>
@@ -236,19 +237,39 @@ const Todo = (props) => {
                                             <th>Due Date</th>
                                             <th>Due Time</th>
                                             <th>Items</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
+                                        {
+                                            todoContext.todos.map((todo, index) => 
+                                                <>
+                                                    <tr>
+                                                        <td className="fs-14">{ moment(todo.createdAt).format('MMM/DD HH:mm A') }</td>
+                                                        <td className="fs-14">{ todo.title }</td>
+                                                        <td className={`fs-14 ${ todo.status === 'pending' ? 'onflamingo' : 'onapple'}`}>{ todo.status }</td>
+                                                        <td className="fs-14">{ todo.dueDate }</td>
+                                                        <td className="fs-14">{ todo.dueTime }</td>
+                                                        <td className="fs-14">{ todo.items.length }</td>
+                                                        <td className="fs-14">
+                                                            <div className="ui-group-button">
 
+                                                                <Link  className="onblue"><span className="fe fe-align-center fs-16"></span></Link>
+                                                                <Link  className="onapple"><span className="fe fe-check-square fs-16"></span></Link>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </>
+                                            )
+                                        }
                                     </tbody>
 
                                 </table>
 
                             </>
                         }
-
-                        
 
                     </div>
 
